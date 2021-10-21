@@ -43,7 +43,7 @@
 
     <script type="module">
 
-        import * as THREE from './build/three.module.js';
+        import * as THREE from '../build/three.module.js';
 
         import { OrbitControls } from './jsm/controls/OrbitControls.js';
 
@@ -346,7 +346,7 @@
         const gui = new GUI();
 
         const params = {
-        textField: ""
+        textField: "Cordinates"
         }
 
         gui.add(params, "Cordinates").onFinishChange(function (value) {
