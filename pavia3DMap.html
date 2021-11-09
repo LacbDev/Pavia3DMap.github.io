@@ -304,7 +304,7 @@
         mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x075F98 } ) );
         break;
         case "central plaza":
-        mesh2 = new THREE.Mesh( geometry,  new THREE.MeshPhongMaterial( { color: 0xC129AA } ) );
+       mesh2 = new THREE.Mesh( new  THREE.BoxGeometry( 4, Math.floor(Math.random() * 25)*4, 4 ),  new THREE.MeshPhongMaterial( { color: 0xE8E8E8 } ) );
         break;
         case "estate":
            mesh2 = new THREE.Mesh( geometryEstate, new THREE.MeshPhongMaterial( { color: 0x997724f } ) );  
@@ -361,7 +361,7 @@
         mesh.position.z = 0;
         mesh.position.y = 20;
         mesh.position.x = 0;
-        scene.add( mesh );
+        //scene.add( mesh );
 
         //SetAllForSale();
 
