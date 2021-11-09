@@ -363,11 +363,11 @@
 
         const gui = new GUI();
 
-        const params = {
-        textField: "This is a placeholder text"
+       const params = {
+        cordinatesForSearch: "X,Y"
         }
 
-        gui.add(params, "textField").onFinishChange(function (value) {
+        gui.add(params, "cordinatesForSearch").onFinishChange(function (value) {
         showByCordinate(value);
         });
 
