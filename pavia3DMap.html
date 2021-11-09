@@ -64,7 +64,7 @@
 
         import { Sky } from './jsm/objects/Sky.js';
 
-        let camera, scene, renderer, controls;
+          let camera, scene, renderer, controls;
 
         let sky, sun;
 
@@ -86,7 +86,7 @@
 
         init();
         animate();
-
+        initSky();
         function initSky()
         {
 
@@ -102,7 +102,7 @@
         const effectController = {
         turbidity: 10,
         rayleigh: 3,
-        mieCoefficient: 0.005,
+        mieCoefficient: 0.002,
         mieDirectionalG: 0.7,
         elevation: 2,
         azimuth: 180,
@@ -131,13 +131,7 @@
 
         const gui = new GUI();
 
-        gui.add( effectController, 'turbidity', 0.0, 20.0, 0.1 ).onChange( guiChanged );
-        gui.add( effectController, 'rayleigh', 0.0, 4, 0.001 ).onChange( guiChanged );
-        gui.add( effectController, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( guiChanged );
-        gui.add( effectController, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange( guiChanged );
-        gui.add( effectController, 'elevation', 0, 90, 0.1 ).onChange( guiChanged );
-        gui.add( effectController, 'azimuth', - 180, 180, 0.1 ).onChange( guiChanged );
-        gui.add( effectController, 'exposure', 0, 1, 0.0001 ).onChange( guiChanged );
+     
 
         guiChanged();
 
@@ -151,6 +145,8 @@
         scene = new THREE.Scene();
         //scene.background = new THREE.Color( 0xffffff );
         //scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+
+
 
 
         sun = new THREE.Vector3();
@@ -247,13 +243,16 @@
         const materialBrown = new THREE.MeshPhongMaterial( { color: 0x997724f } ); // Brown
         const materialPlaza = new THREE.MeshPhongMaterial( { color: 0xC129AA } ); // Brown
 
+        const texture = new THREE.TextureLoader().load( 'textures/atlas.png' );
+        texture.magFilter = THREE.NearestFilter;
+
+      
         
 
 
         var geometry = new THREE.BoxGeometry( 4, 4, 4 );
         var geometryLand = new THREE.BoxGeometry( 4, 12, 4 );
         var geometryEstate = new THREE.BoxGeometry( 4, 15, 4 );
-
 
         let count=0;
 
@@ -262,20 +261,20 @@
         {
 
 
-        let x,y,z, address, landType;
+            let x,y,z, address, landType;
 
-        z = ((item[1])*-1);
-        y = 5;
-        x = ((item[0]));
-        landType = item[2];
+            z = ((item[1])*-1);
+            y = 5;
+            x = ((item[0]));
+            landType = item[2];
 
 
-        let xName = "plus";
-        let yName = "plus";
-        if((x) < 0)
-        {
-        xName="minus";
-        }
+            let xName = "plus";
+            let yName = "plus";
+            if((x) < 0)
+            {
+            xName="minus";
+            }
 
         address=item[2];
 
@@ -293,6 +292,10 @@
         switch(landType){
         case "land":
             mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x00ff00 } ) );
+
+        // mesh2 = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { map: texture, side: THREE.DoubleSide } ) );
+      
+
             break;
         case "sea":
             mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x33A5EA } ) );
@@ -364,7 +367,7 @@
 
         const gui = new GUI();
 
-       const params = {
+        const params = {
         cordinatesForSearch: "X,Y"
         }
 
