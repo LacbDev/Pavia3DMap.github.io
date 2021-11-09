@@ -364,6 +364,8 @@
         //scene.add( mesh );
 
         //SetAllForSale();
+            
+            BuildBridge();
 
         const gui = new GUI();
 
@@ -378,6 +380,57 @@
         //}
 
         //
+            
+               function BuildBridge()
+        {
+        let meshBridge;
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (-140);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (80);
+        scene.add( meshBridge );
+
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (-140);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (60);
+        scene.add( meshBridge );
+
+
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (-255);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (80);
+        scene.add( meshBridge );
+
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (-255);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (60);
+        scene.add( meshBridge );
+
+    
+
+             
+        for(let k=60;k < 80;k++)
+        {
+            for(let i=-140;i>-255;i--)
+            {
+                meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 2, 2, 2 ),  new THREE.MeshPhongMaterial( { color: 0x746F6F } ) );
+                meshBridge.castShadow = true;
+                meshBridge.position.z = (i);
+                meshBridge.position.y = 20;
+                meshBridge.position.x = (k);
+                scene.add( meshBridge );
+            }
+
+        }   
+         
+        }
 
         function clickMe()
         {
