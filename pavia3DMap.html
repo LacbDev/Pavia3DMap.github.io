@@ -365,7 +365,10 @@
 
         //SetAllForSale();
             
-            BuildBridge();
+           
+        BuildBridge(-140, -255,60,80 );
+
+        BuildBridge(605, 150,-20,0 );
 
         const gui = new GUI();
 
@@ -381,44 +384,45 @@
 
         //
             
-               function BuildBridge()
+              
+        function BuildBridge(zFrom, zTo, xFRom, xTo)
         {
         let meshBridge;
         meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
         meshBridge.castShadow = true;
-        meshBridge.position.z = (-140);
+        meshBridge.position.z = (zFrom);
         meshBridge.position.y = 5;
-        meshBridge.position.x = (80);
+        meshBridge.position.x = (xTo);
         scene.add( meshBridge );
 
         meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
         meshBridge.castShadow = true;
-        meshBridge.position.z = (-140);
+        meshBridge.position.z = (zFrom);
         meshBridge.position.y = 5;
-        meshBridge.position.x = (60);
+        meshBridge.position.x = (xFRom);
         scene.add( meshBridge );
 
 
         meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
         meshBridge.castShadow = true;
-        meshBridge.position.z = (-255);
+        meshBridge.position.z = (zTo);
         meshBridge.position.y = 5;
-        meshBridge.position.x = (80);
+        meshBridge.position.x = (xTo);
         scene.add( meshBridge );
 
         meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
         meshBridge.castShadow = true;
-        meshBridge.position.z = (-255);
+        meshBridge.position.z = (zTo);
         meshBridge.position.y = 5;
-        meshBridge.position.x = (60);
+        meshBridge.position.x = (xFRom);
         scene.add( meshBridge );
 
     
 
              
-        for(let k=60;k < 80;k++)
+        for(let k=xFRom;k < xTo;k++)
         {
-            for(let i=-140;i>-255;i--)
+            for(let i=zFrom;i>zTo;i--)
             {
                 meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 2, 2, 2 ),  new THREE.MeshPhongMaterial( { color: 0x746F6F } ) );
                 meshBridge.castShadow = true;
@@ -431,7 +435,7 @@
         }   
          
         }
-
+            
         function clickMe()
         {
         alert('');
