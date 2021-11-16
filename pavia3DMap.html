@@ -66,7 +66,7 @@
 
           let camera, scene, renderer, controls;
 
-       let sky, sun;
+        let sky, sun;
 
         const objects = [];
 
@@ -83,6 +83,7 @@
         const direction = new THREE.Vector3();
         const vertex = new THREE.Vector3();
         const color = new THREE.Color();
+        const loader = new GLTFLoader();
 
         init();
         animate();
@@ -149,6 +150,7 @@
 
 
 
+
         sun = new THREE.Vector3();
 
         const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 );
@@ -164,71 +166,7 @@
 
         //scene.add( controls.getObject() );
 
-        const onKeyDown = function ( event )
-        {
-
-        switch ( event.code ) {
-
-        case 'ArrowUp':
-        case 'KeyW':
-        moveForward = true;
-        break;
-
-        case 'ArrowLeft':
-        case 'KeyA':
-        moveLeft = true;
-        break;
-
-        case 'ArrowDown':
-        case 'KeyS':
-        moveBackward = true;
-        break;
-
-        case 'ArrowRight':
-        case 'KeyD':
-        moveRight = true;
-        break;
-
-        case 'Space':
-        if ( canJump === true ) velocity.y += 350;
-        canJump = false;
-        break;
-
-        }
-
-        };
-
-        const onKeyUp = function ( event ) {
-
-        switch ( event.code ) {
-
-        case 'ArrowUp':
-        case 'KeyW':
-        moveForward = false;
-        break;
-
-        case 'ArrowLeft':
-        case 'KeyA':
-        moveLeft = false;
-        break;
-
-        case 'ArrowDown':
-        case 'KeyS':
-        moveBackward = false;
-        break;
-
-        case 'ArrowRight':
-        case 'KeyD':
-        moveRight = false;
-        break;
-
-        }
-
-        };
-
-        document.addEventListener( 'keydown', onKeyDown );
-        document.addEventListener( 'keyup', onKeyUp );
-
+    
         raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
 
@@ -250,7 +188,10 @@
         
 
 
-        var geometry = new THREE.BoxGeometry(4.9,4.9,4.9);
+        var geometry = new THREE.BoxGeometry(4.9,13,4.9);
+        var geometrySea = new THREE.BoxGeometry(4.9,4.9,4.9);
+        var geometrySand = new THREE.BoxGeometry(4.9,4,4.9);
+
         var geometryLand = new THREE.BoxGeometry( 4.9, 12, 4.9 );
         var geometryEstate = new THREE.BoxGeometry( 4.9,4.9,4.9);
 
@@ -292,16 +233,27 @@
         switch(landType){
         case "land":
             mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x00ff00 } ) );
-          
-             
+           
 
 
+                if(x>=-71 && x<=67 && z < -45)
+                {
+                    if(count%Math.floor(Math.random() * 50)==0)
+
+                    {
+                    AddTree((item[0]*5), (item[1]*5)*-1);
+                    }   
+
+                   
+                }
+        
+   
             break;
         case "sea":
-            mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x33A5EA } ) );
+            mesh2 = new THREE.Mesh( geometrySea, new THREE.MeshPhongMaterial( { color: 0x33A5EA } ) );
         break;
         case "deep sea":
-        mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x075F98 } ) );
+        mesh2 = new THREE.Mesh( geometrySea, new THREE.MeshPhongMaterial( { color: 0x075F98 } ) );
         break;
         case "central plaza":
                 if(item[1]=="-14" || item[1]=="-11" || item[1]=="-8" || item[1]=="-5" || item[1]=="-2" || item[1]=="1" || item[1]=="4" || item[1]=="7"|| item[1]=="10" || item[0]=="-13"|| item[0]=="-10"|| item[0]=="-7"|| item[0]=="-4"|| item[0]=="-1")
@@ -320,7 +272,7 @@
            mesh2.position.y = 5;
             break;
         case "sand":
-        mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0xF7E658 } ) );
+        mesh2 = new THREE.Mesh( geometrySand, new THREE.MeshPhongMaterial( { color: 0xF7E658 } ) );
         break;
         default:
             
@@ -391,7 +343,7 @@
         plane.receiveShadow = true;
         // rotate and position the plane
         plane.rotation.x = -0.5 * Math.PI;
-        plane.position.set(-17,8,138);
+        plane.position.set(-17,12,138);
         // add the plane to the scene
         scene.add(plane);
 
@@ -403,7 +355,7 @@
 
         BuildBridge(605, 150,-20,0 );
 
-        
+        //AddHouse();
 
         const gui = new GUI();
 
@@ -418,6 +370,34 @@
         //}
 
         //
+
+        function AddHouse(x,y)
+        {
+        
+                loader.load( 'models/house_low_poly_free/scene.gltf', function ( gltf ) {
+
+                gltf.scene.position.set(x,10,y);
+   
+                scene.add( gltf.scene );
+
+
+                } );
+
+        }
+
+        function AddTree(x,y)
+        {
+
+        loader.load( 'models/low_poly_trees/scene.gltf', function ( gltf ) {
+
+        gltf.scene.position.set(x,10,y);
+
+        scene.add( gltf.scene );
+
+
+        } );
+
+        }
 
 
         function BuildBridge(zFrom, zTo, xFRom, xTo)
