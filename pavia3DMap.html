@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>three.js - pointerlock controls</title>
+    <title>Pavia 3D map - donations addr1qxt5hfz06p8yc5uzsuqdyt7efcsg9smpu4az8rr9p975hcl3tnphqevwpv4ale2y55j5l8snqxav36qzj7t3e3atugaqr8an53</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link type="text/css" rel="stylesheet" href="main.css">
@@ -42,6 +42,17 @@
         </div>
     </div>-->
 
+    
+    <div>
+      
+        <p>
+            Donations to addr1qxt5hfz06p8yc5uzsuqdyt7efcsg9smpu4az8rr9p975hcl3tnphqevwpv4ale2y55j5l8snqxav36qzj7t3e3atugaqr8an53
+        </p>
+        <br />
+
+
+    </div>
+    
     <script type="module">
 
        
@@ -53,7 +64,7 @@
 
         import { Sky } from './jsm/objects/Sky.js';
 
-        let camera, scene, renderer, controls;
+          let camera, scene, renderer, controls;
 
         let sky, sun;
 
@@ -72,10 +83,11 @@
         const direction = new THREE.Vector3();
         const vertex = new THREE.Vector3();
         const color = new THREE.Color();
+        const loader = new GLTFLoader();
 
         init();
         animate();
-
+        initSky();
         function initSky()
         {
 
@@ -91,7 +103,7 @@
         const effectController = {
         turbidity: 10,
         rayleigh: 3,
-        mieCoefficient: 0.005,
+        mieCoefficient: 0.002,
         mieDirectionalG: 0.7,
         elevation: 2,
         azimuth: 180,
@@ -120,13 +132,7 @@
 
         const gui = new GUI();
 
-        gui.add( effectController, 'turbidity', 0.0, 20.0, 0.1 ).onChange( guiChanged );
-        gui.add( effectController, 'rayleigh', 0.0, 4, 0.001 ).onChange( guiChanged );
-        gui.add( effectController, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( guiChanged );
-        gui.add( effectController, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange( guiChanged );
-        gui.add( effectController, 'elevation', 0, 90, 0.1 ).onChange( guiChanged );
-        gui.add( effectController, 'azimuth', - 180, 180, 0.1 ).onChange( guiChanged );
-        gui.add( effectController, 'exposure', 0, 1, 0.0001 ).onChange( guiChanged );
+     
 
         guiChanged();
 
@@ -140,6 +146,9 @@
         scene = new THREE.Scene();
         //scene.background = new THREE.Color( 0xffffff );
         //scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+
+
+
 
 
         sun = new THREE.Vector3();
@@ -157,71 +166,7 @@
 
         //scene.add( controls.getObject() );
 
-        const onKeyDown = function ( event )
-        {
-
-        switch ( event.code ) {
-
-        case 'ArrowUp':
-        case 'KeyW':
-        moveForward = true;
-        break;
-
-        case 'ArrowLeft':
-        case 'KeyA':
-        moveLeft = true;
-        break;
-
-        case 'ArrowDown':
-        case 'KeyS':
-        moveBackward = true;
-        break;
-
-        case 'ArrowRight':
-        case 'KeyD':
-        moveRight = true;
-        break;
-
-        case 'Space':
-        if ( canJump === true ) velocity.y += 350;
-        canJump = false;
-        break;
-
-        }
-
-        };
-
-        const onKeyUp = function ( event ) {
-
-        switch ( event.code ) {
-
-        case 'ArrowUp':
-        case 'KeyW':
-        moveForward = false;
-        break;
-
-        case 'ArrowLeft':
-        case 'KeyA':
-        moveLeft = false;
-        break;
-
-        case 'ArrowDown':
-        case 'KeyS':
-        moveBackward = false;
-        break;
-
-        case 'ArrowRight':
-        case 'KeyD':
-        moveRight = false;
-        break;
-
-        }
-
-        };
-
-        document.addEventListener( 'keydown', onKeyDown );
-        document.addEventListener( 'keyup', onKeyUp );
-
+    
         raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
 
@@ -236,12 +181,19 @@
         const materialBrown = new THREE.MeshPhongMaterial( { color: 0x997724f } ); // Brown
         const materialPlaza = new THREE.MeshPhongMaterial( { color: 0xC129AA } ); // Brown
 
+        const texture = new THREE.TextureLoader().load( 'textures/atlas.png' );
+        texture.magFilter = THREE.NearestFilter;
+
+      
         
 
 
-        var geometry = new THREE.BoxGeometry( 3, 3, 3 );
-        var geometryLand = new THREE.BoxGeometry( 3, 6, 3 );
-        var geometryEstate = new THREE.BoxGeometry( 3, 9, 3 );
+        var geometry = new THREE.BoxGeometry(4.9,13,4.9);
+        var geometrySea = new THREE.BoxGeometry(4.9,4.9,4.9);
+        var geometrySand = new THREE.BoxGeometry(4.9,4,4.9);
+
+        var geometryLand = new THREE.BoxGeometry( 4.9, 12, 4.9 );
+        var geometryEstate = new THREE.BoxGeometry( 4.9,4.9,4.9);
 
         let count=0;
 
@@ -250,20 +202,20 @@
         {
 
 
-        let x,y,z, address, landType;
+            let x,y,z, address, landType;
 
-        z = ((item[1])*-1);
-        y = 5;
-        x = ((item[0]));
-        landType = item[2];
+            z = ((item[1])*-1);
+            y = 5;
+            x = ((item[0]));
+            landType = item[2];
 
 
-        let xName = "plus";
-        let yName = "plus";
-        if((x) < 0)
-        {
-        xName="minus";
-        }
+            let xName = "plus";
+            let yName = "plus";
+            if((x) < 0)
+            {
+            xName="minus";
+            }
 
         address=item[2];
 
@@ -281,34 +233,57 @@
         switch(landType){
         case "land":
             mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x00ff00 } ) );
+           
+
+
+                if(x>=-71 && x<=67 && z < -45)
+                {
+                    if(count%Math.floor(Math.random() * 50)==0)
+
+                    {
+                    AddTree((item[0]*5), (item[1]*5)*-1);
+                    }   
+
+                   
+                }
+        
+   
             break;
         case "sea":
-            mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x33A5EA } ) );
+            mesh2 = new THREE.Mesh( geometrySea, new THREE.MeshPhongMaterial( { color: 0x33A5EA } ) );
         break;
         case "deep sea":
-        mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x075F98 } ) );
+        mesh2 = new THREE.Mesh( geometrySea, new THREE.MeshPhongMaterial( { color: 0x075F98 } ) );
         break;
         case "central plaza":
-        mesh2 = new THREE.Mesh( geometry,  new THREE.MeshPhongMaterial( { color: 0xC129AA } ) );
+                if(item[1]=="-14" || item[1]=="-11" || item[1]=="-8" || item[1]=="-5" || item[1]=="-2" || item[1]=="1" || item[1]=="4" || item[1]=="7"|| item[1]=="10" || item[0]=="-13"|| item[0]=="-10"|| item[0]=="-7"|| item[0]=="-4"|| item[0]=="-1")
+                {
+                      mesh2 = new THREE.Mesh( new  THREE.BoxGeometry( 4.9, 4.9, 4.9 ),  new THREE.MeshPhongMaterial( { color: 0x4C4848} ) );
+                }
+                
+                else
+                {
+                        mesh2 = new THREE.Mesh( new  THREE.BoxGeometry( 4.9, Math.floor(Math.random() * 25)*4.9, 4.9 ),  new THREE.MeshPhongMaterial( { color: 0xE8E8E8 } ) );
+                }
+                
         break;
         case "estate":
-           mesh2 = new THREE.Mesh( geometryEstate, new THREE.MeshPhongMaterial( { color: 0x997724f } ) );  
+           mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x997724f } ) );  
            mesh2.position.y = 5;
             break;
         case "sand":
-        mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0xF7E658 } ) );
+        mesh2 = new THREE.Mesh( geometrySand, new THREE.MeshPhongMaterial( { color: 0xF7E658 } ) );
         break;
         default:
             
             break;
         }
 
+ 
+        
         mesh2.castShadow = true;
         mesh2.position.z = ((item[1]*5)*-1);
-      
         mesh2.position.x = ((item[0]*5));
-        mesh2.onClick = "clickMe()";
-
         mesh2.name = meshName;
 
         
@@ -346,23 +321,136 @@
         mesh.position.z = 0;
         mesh.position.y = 20;
         mesh.position.x = 0;
-        scene.add( mesh );
+        //scene.add( mesh );
 
-        //SetAllForSale();
+        const texture4 = new THREE.TextureLoader().load( 'textures/minus86minus125.png' );
+
+        // immediately use the texture for material creation
+        const material4 = new THREE.MeshBasicMaterial( { map: texture4 } );
+        var centralPlaza = new THREE.BoxGeometry( 3, 2, 3  );
+        const mesh4 = new THREE.Mesh( centralPlaza, material4 );
+        mesh4.position.z = (-125);
+        mesh4.position.y = 25;
+        mesh4.position.x = (-86);
+        scene.add( mesh4 );
+
+        var planeGeometry = new THREE.PlaneGeometry(1130, 1130, 1, 1);
+        var texture2 = new THREE.TextureLoader().load( 'textures/estates.png' );
+        var planeMaterial = new THREE.MeshLambertMaterial( { map: texture2 } );
+        planeMaterial.transparent = true;
+        //var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+        var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.receiveShadow = true;
+        // rotate and position the plane
+        plane.rotation.x = -0.5 * Math.PI;
+        plane.position.set(-17,12,138);
+        // add the plane to the scene
+        scene.add(plane);
+
+
+       // SetAllForSale();
+
+    
+        BuildBridge(-140, -255,60,80 );
+
+        BuildBridge(605, 150,-20,0 );
+
+        //AddHouse();
 
         const gui = new GUI();
 
         const params = {
-        textField: "This is a placeholder text"
+        cordinatesForSearch: "X,Y"
         }
 
-        gui.add(params, "textField").onFinishChange(function (value) {
+        gui.add(params, "cordinatesForSearch").onFinishChange(function (value) {
         showByCordinate(value);
         });
 
         //}
 
         //
+
+        function AddHouse(x,y)
+        {
+        
+                loader.load( 'models/house_low_poly_free/scene.gltf', function ( gltf ) {
+
+                gltf.scene.position.set(x,10,y);
+   
+                scene.add( gltf.scene );
+
+
+                } );
+
+        }
+
+        function AddTree(x,y)
+        {
+
+        loader.load( 'models/low_poly_trees/scene.gltf', function ( gltf ) {
+
+        gltf.scene.position.set(x,10,y);
+
+        scene.add( gltf.scene );
+
+
+        } );
+
+        }
+
+
+        function BuildBridge(zFrom, zTo, xFRom, xTo)
+        {
+        let meshBridge;
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (zFrom);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (xTo);
+        scene.add( meshBridge );
+
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (zFrom);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (xFRom);
+        scene.add( meshBridge );
+
+
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (zTo);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (xTo);
+        scene.add( meshBridge );
+
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 6, 100, 6 ),  new THREE.MeshPhongMaterial( { color: 0xE80707 } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (zTo);
+        meshBridge.position.y = 5;
+        meshBridge.position.x = (xFRom);
+        scene.add( meshBridge );
+
+    
+
+             
+        for(let k=xFRom;k < xTo;k++)
+        {
+            for(let i=zFrom;i>zTo;i--)
+            {
+                meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 2, 2, 2 ),  new THREE.MeshPhongMaterial( { color: 0x746F6F } ) );
+                meshBridge.castShadow = true;
+                meshBridge.position.z = (i);
+                meshBridge.position.y = 20;
+                meshBridge.position.x = (k);
+                scene.add( meshBridge );
+            }
+
+        }   
+         
+        }
+
 
         function clickMe()
         {
