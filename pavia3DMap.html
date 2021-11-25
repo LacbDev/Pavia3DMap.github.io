@@ -134,7 +134,7 @@
 
         const gui = new GUI();
 
-     
+
 
         guiChanged();
 
@@ -168,7 +168,7 @@
 
         //scene.add( controls.getObject() );
 
-    
+
         raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
 
@@ -186,8 +186,8 @@
         const texture = new THREE.TextureLoader().load( 'textures/atlas.png' );
         texture.magFilter = THREE.NearestFilter;
 
-      
-        
+
+
 
 
         var geometry = new THREE.BoxGeometry(4.9,13,4.9);
@@ -204,20 +204,20 @@
         {
 
 
-            let x,y,z, address, landType;
+        let x,y,z, address, landType;
 
-            z = ((item[1])*-1);
-            y = 5;
-            x = ((item[0]));
-            landType = item[2];
+        z = ((item[1])*-1);
+        y = 5;
+        x = ((item[0]));
+        landType = item[2];
 
-
-            let xName = "plus";
-            let yName = "plus";
-            if((x) < 0)
-            {
-            xName="minus";
-            }
+        
+        let xName = "plus";
+        let yName = "plus";
+        if((x) < 0)
+        {
+        xName="minus";
+        }
 
         address=item[2];
 
@@ -230,69 +230,52 @@
 
         let mesh2 = new THREE.Mesh( geometry, material );
         mesh2.position.y = 5;
-        
+
 
         switch(landType){
         case "land":
-            mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x00ff00 } ) );
-           
+        mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x00ff00 } ) );
 
 
-                if(x>=-71 && x<=67 && z < -45)
-                {
-                    if(count%Math.floor(Math.random() * 50)==0)
+        break;
 
-                    {
-                    AddTree((item[0]*5), (item[1]*5)*-1);
-                    }   
-
-                   
-                }
-        
-   
-            break;
+        case "trees":
+        AddTree((item[0]*5), (item[1]*5)*-1);
+        break;
         case "sea":
-            mesh2 = new THREE.Mesh( geometrySea, new THREE.MeshPhongMaterial( { color: 0x33A5EA } ) );
+        mesh2 = new THREE.Mesh( geometrySea, new THREE.MeshPhongMaterial( { color: 0x33A5EA } ) );
         break;
         case "deep sea":
         mesh2 = new THREE.Mesh( geometrySea, new THREE.MeshPhongMaterial( { color: 0x075F98 } ) );
         break;
         case "central plaza":
-                if(item[1]=="-14" || item[1]=="-11" || item[1]=="-8" || item[1]=="-5" || item[1]=="-2" || item[1]=="1" || item[1]=="4" || item[1]=="7"|| item[1]=="10" || item[0]=="-13"|| item[0]=="-10"|| item[0]=="-7"|| item[0]=="-4"|| item[0]=="-1")
-                {
-                      mesh2 = new THREE.Mesh( new  THREE.BoxGeometry( 4.9, 4.9, 4.9 ),  new THREE.MeshPhongMaterial( { color: 0x4C4848} ) );
-                }
-                
-                else
-                {
-                        mesh2 = new THREE.Mesh( new  THREE.BoxGeometry( 4.9, Math.floor(Math.random() * 25)*4.9, 4.9 ),  new THREE.MeshPhongMaterial( { color: 0xE8E8E8 } ) );
-                }
-                
+           
+
         break;
         case "estate":
-           mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x997724f } ) );  
-           mesh2.position.y = 5;
-            break;
+        mesh2 = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x997724f } ) );
+        mesh2.position.y = 5;
+        break;
         case "sand":
         mesh2 = new THREE.Mesh( geometrySand, new THREE.MeshPhongMaterial( { color: 0xF7E658 } ) );
         break;
         default:
-            
-            break;
+
+        break;
         }
 
- 
-        
+
+
         mesh2.castShadow = true;
         mesh2.position.z = ((item[1]*5)*-1);
         mesh2.position.x = ((item[0]*5));
         mesh2.name = meshName;
 
-        
+
         scene.add( mesh2 );
 
         objects.push( mesh2 );
-        
+
 
 
 
@@ -323,7 +306,7 @@
         mesh.position.z = 0;
         mesh.position.y = 20;
         mesh.position.x = 0;
-        //scene.add( mesh );
+        scene.add( mesh );
 
         const texture4 = new THREE.TextureLoader().load( 'textures/minus86minus125.png' );
 
@@ -336,26 +319,15 @@
         mesh4.position.x = (-86);
         scene.add( mesh4 );
 
-        var planeGeometry = new THREE.PlaneGeometry(1130, 1130, 1, 1);
-        var texture2 = new THREE.TextureLoader().load( 'textures/estates.png' );
-        var planeMaterial = new THREE.MeshLambertMaterial( { map: texture2 } );
-        planeMaterial.transparent = true;
-        //var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
-        var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        plane.receiveShadow = true;
-        // rotate and position the plane
-        plane.rotation.x = -0.5 * Math.PI;
-        plane.position.set(-17,12,138);
-        // add the plane to the scene
-        scene.add(plane);
+     
 
 
-       // SetAllForSale();
+        // SetAllForSale();
 
-    
-        BuildBridge(-140, -255,60,80 );
 
-        BuildBridge(605, 150,-20,0 );
+       // BuildBridge(-140, -255,60,80 );
+
+        //BuildBridge(605, 150,-20,0 );
 
         //AddHouse();
 
@@ -375,15 +347,15 @@
 
         function AddHouse(x,y)
         {
-        
-                loader.load( 'models/house_low_poly_free/scene.gltf', function ( gltf ) {
 
-                gltf.scene.position.set(x,10,y);
-   
-                scene.add( gltf.scene );
+        loader.load( 'models/house_low_poly_free/scene.gltf', function ( gltf ) {
+
+        gltf.scene.position.set(x,10,y);
+
+        scene.add( gltf.scene );
 
 
-                } );
+        } );
 
         }
 
@@ -434,23 +406,23 @@
         meshBridge.position.x = (xFRom);
         scene.add( meshBridge );
 
-    
 
-             
+
+
         for(let k=xFRom;k < xTo;k++)
         {
-            for(let i=zFrom;i>zTo;i--)
-            {
-                meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 2, 2, 2 ),  new THREE.MeshPhongMaterial( { color: 0x746F6F } ) );
-                meshBridge.castShadow = true;
-                meshBridge.position.z = (i);
-                meshBridge.position.y = 20;
-                meshBridge.position.x = (k);
-                scene.add( meshBridge );
-            }
+        for(let i=zFrom;i>zTo;i--)
+        {
+        meshBridge = new THREE.Mesh( new  THREE.BoxGeometry( 2, 2, 2 ),  new THREE.MeshPhongMaterial( { color: 0x746F6F } ) );
+        meshBridge.castShadow = true;
+        meshBridge.position.z = (i);
+        meshBridge.position.y = 20;
+        meshBridge.position.x = (k);
+        scene.add( meshBridge );
+        }
 
-        }   
-         
+        }
+
         }
 
 
@@ -517,15 +489,15 @@
         try
         {
 
-                let z2 = item2.position.z;
-                let x2 = item2.position.x;
-                //console.log(z2,x2);
-                if(z2==z && x2 == x)
-                {
-                    item2.material.color.r = 100;
-                    item2.material.color.b = 255;
-                 //console.log("match");
-                }
+        let z2 = item2.position.z;
+        let x2 = item2.position.x;
+        //console.log(z2,x2);
+        if(z2==z && x2 == x)
+        {
+        item2.material.color.r = 100;
+        item2.material.color.b = 255;
+        //console.log("match");
+        }
         }
         catch(ex)
         {
